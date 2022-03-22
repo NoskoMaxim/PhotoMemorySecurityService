@@ -14,8 +14,8 @@ public class PhotoMemorySecurityApplication {
 
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-        return args -> System.out.println("Photo Memory Security Application is active and ready to go!");
+        return args -> System.out.println(
+                "Photo Memory Security Application is active and ready to go!\n" +
+                        "Swagger Documentation: http://localhost:8082/swagger-ui/#/");
     }
-
-
 }
