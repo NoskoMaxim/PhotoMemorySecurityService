@@ -12,6 +12,21 @@ public class UserToUpdateFormDto {
     public UserToUpdateFormDto() {
     }
 
+    public UserToUpdateFormDto(
+            Long userId,
+            String username,
+            String firstName,
+            String lastName,
+            String email,
+            String phone) {
+        this.userId = userId;
+        this.username = username;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phone = phone;
+    }
+
     public Long getUserId() {
         return userId;
     }
