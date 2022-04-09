@@ -27,7 +27,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -146,10 +151,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public void updateRole(UserRoleDto roleDto) {
-        UserRole userRole = new UserRole();
-        userRole.setRoleId(roleDto.getRoleId());
-        userRole.setRoleName(roleDto.getRoleName());
-        roleRepos.save(userRole);
+        roleRepos.save(userAdapter.getUserRole(roleDto));
     }
 
     @Override
