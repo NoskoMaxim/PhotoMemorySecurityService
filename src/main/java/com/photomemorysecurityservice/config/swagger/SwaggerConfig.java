@@ -15,7 +15,7 @@ public class SwaggerConfig {
     public Docket projectApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("photomemorysecurityservice"))
+                .apis(RequestHandlerSelectors.basePackage("com.photomemorysecurityservice"))
                 .build()
                 .apiInfo(this.projectApiDetails());
     }
