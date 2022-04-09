@@ -1,9 +1,12 @@
 package com.photomemorysecurityservice.model.user;
 
+import com.photomemorysecurityservice.model.publication.Publication;
+
 import javax.persistence.*;
 import java.util.List;
 
 import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity(
@@ -39,37 +42,49 @@ public class User {
             length = 20
     )
     private String username;
+
     @Column(
             name = "password",
             unique = true
     )
     private String password;
+
     @Column(
             name = "first_name",
             columnDefinition = "TEXT"
     )
     private String firstName;
+
     @Column(
             name = "last_name",
             columnDefinition = "TEXT"
     )
     private String lastName;
+
     @Column(
             name = "email",
             columnDefinition = "TEXT"
     )
     private String email;
+
     @Column(
             name = "phone",
             columnDefinition = "TEXT"
     )
     private String phone;
+
     @ManyToMany(fetch = EAGER)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<UserRole> roles;
+
+    @OneToMany(
+            mappedBy = "user",
+            fetch = LAZY
+    )
+    private List<Publication> publications;
 
     public User(
             Long userId,
@@ -79,7 +94,8 @@ public class User {
             String lastName,
             String email,
             String phone,
-            List<UserRole> roles) {
+            List<UserRole> roles,
+            List<Publication> publications) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -88,6 +104,7 @@ public class User {
         this.email = email;
         this.phone = phone;
         this.roles = roles;
+        this.publications = publications;
     }
 
     public User() {
@@ -155,5 +172,13 @@ public class User {
 
     public void setRoles(List<UserRole> roles) {
         this.roles = roles;
+    }
+
+    public List<Publication> getPublications() {
+        return publications;
+    }
+
+    public void setPublications(List<Publication> publications) {
+        this.publications = publications;
     }
 }
