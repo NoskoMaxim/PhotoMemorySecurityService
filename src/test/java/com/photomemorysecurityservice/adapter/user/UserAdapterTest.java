@@ -354,4 +354,34 @@ class UserAdapterTest {
             assertNotEquals("ADMIN", actual.getRoleName());
         });
     }
+
+    @Test
+    void itShouldGetUserRole() {
+        //Arrange
+        UserRoleDto userRole = new UserRoleDto();
+        userRole.setRoleId(1L);
+        userRole.setRoleName("USER");
+
+        //Act
+        UserRole actual = userAdapter.getUserRole(userRole);
+
+        //Assert
+        assertEquals(1L, actual.getRoleId());
+        assertEquals("USER", actual.getRoleName());
+    }
+
+    @Test
+    void itShouldNotGetUserRole() {
+        //Arrange
+        UserRoleDto userRole = new UserRoleDto();
+        userRole.setRoleId(1L);
+        userRole.setRoleName("USER");
+
+        //Act
+        UserRole actual = userAdapter.getUserRole(userRole);
+
+        //Assert
+        assertNotEquals(2L, actual.getRoleId());
+        assertNotEquals("ADMIN", actual.getRoleName());
+    }
 }
