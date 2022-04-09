@@ -46,4 +46,9 @@ public class UserAdapter {
                 .map(this::getUserRoleDto)
                 .collect(Collectors.toList());
     }
+
+    public UserRole getUserRole(UserRoleDto roleDto){
+        return userMapper.map(roleDto, UserRole.class);
+    }
+
 }
