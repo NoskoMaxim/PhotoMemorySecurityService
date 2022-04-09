@@ -42,7 +42,7 @@ public class Publication {
             name = "file",
             unique = true
     )
-    private Byte[] file;
+    private byte[] file;
 
     @Column(
             name = "text",
@@ -61,7 +61,7 @@ public class Publication {
     public Publication(
             Long id,
             String fileName,
-            Byte[] file,
+            byte[] file,
             String text,
             User user) {
         this.id = id;
@@ -90,11 +90,11 @@ public class Publication {
         this.fileName = fileName;
     }
 
-    public Byte[] getFile() {
+    public byte[] getFile() {
         return file;
     }
 
-    public void setFile(Byte[] file) {
+    public void setFile(byte[] file) {
         this.file = file;
     }
 
