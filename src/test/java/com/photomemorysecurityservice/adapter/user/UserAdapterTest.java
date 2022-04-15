@@ -8,6 +8,7 @@ import com.photomemorysecurityservice.model.user.UserRole;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,8 +42,8 @@ class UserAdapterTest {
                                 1L,
                                 "USER"
                         )
-                )
-        );
+                ),
+                new ArrayList<>());
 
         //Act
         UserDto actual = userAdapter.getUserDto(user);
@@ -81,8 +82,8 @@ class UserAdapterTest {
                                         1L,
                                         "USER"
                                 )
-                        )
-                ),
+                        ),
+                        new ArrayList<>()),
                 new User(
                         1L,
                         "Max",
@@ -100,8 +101,8 @@ class UserAdapterTest {
                                         1L,
                                         "USER"
                                 )
-                        )
-                )
+                        ),
+                        new ArrayList<>())
         );
 
         //Act
@@ -142,8 +143,8 @@ class UserAdapterTest {
                                 1L,
                                 "USER"
                         )
-                )
-        );
+                ),
+                new ArrayList<>());
 
         //Act
         UserDto actual = userAdapter.getUserDto(user);
@@ -182,8 +183,8 @@ class UserAdapterTest {
                                         1L,
                                         "USER"
                                 )
-                        )
-                ),
+                        ),
+                        new ArrayList<>()),
                 new User(
                         1L,
                         "Max",
@@ -201,8 +202,8 @@ class UserAdapterTest {
                                         1L,
                                         "USER"
                                 )
-                        )
-                )
+                        ),
+                        new ArrayList<>())
         );
 
         //Act
