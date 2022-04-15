@@ -10,10 +10,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class PhotoMemorySecurityAdvice extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {PhotoMemorySecurityException.class})
+    @ExceptionHandler(value = PhotoMemorySecurityException.class)
     protected ResponseEntity<Object> handlePhotoMemorySecurityException(
             PhotoMemorySecurityException exception,
             WebRequest request) {
+        exception.printStackTrace();
         return handleExceptionInternal(
                 exception,
                 exception.getFailures(),

@@ -12,6 +12,7 @@ public class PhotoMemorySecurityException extends RuntimeException {
     private final HttpStatus status;
 
     public PhotoMemorySecurityException(Map<String, String> failures, HttpStatus status) {
+        super(String.join(" -> ", failures.values()));
         this.failures = failures;
         this.status = status;
     }
