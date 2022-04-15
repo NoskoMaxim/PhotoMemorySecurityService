@@ -2,7 +2,18 @@ package com.photomemorysecurityservice.model.user;
 
 import com.photomemorysecurityservice.model.publication.Publication;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.FetchType.EAGER;
@@ -29,7 +40,7 @@ public class User {
             generator = "user_sequence"
     )
     @Column(
-            name = "id",
+            name = "user_id",
             unique = true,
             updatable = false
     )
@@ -78,13 +89,13 @@ public class User {
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<UserRole> roles;
+    private List<UserRole> roles = new ArrayList<>();
 
     @OneToMany(
             mappedBy = "user",
             fetch = LAZY
     )
-    private List<Publication> publications;
+    private List<Publication> publications = new ArrayList<>();
 
     public User(
             Long userId,

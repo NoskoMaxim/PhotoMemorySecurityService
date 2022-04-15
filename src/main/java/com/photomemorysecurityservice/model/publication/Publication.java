@@ -4,6 +4,7 @@ import com.photomemorysecurityservice.model.user.User;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity(
@@ -25,11 +26,11 @@ public class Publication {
             generator = "publication_sequence"
     )
     @Column(
-            name = "id",
+            name = "publication_id",
             unique = true,
             updatable = false
     )
-    private Long id;
+    private Long publicationId;
 
     @Column(
             name = "file_name",
@@ -39,10 +40,24 @@ public class Publication {
     private String fileName;
 
     @Column(
-            name = "file",
-            unique = true
+            name = "file_url",
+            unique = true,
+            columnDefinition = "TEXT",
+            length = 500
     )
-    private byte[] file;
+    private String fileURL;
+
+    @Column(
+            name = "size_file",
+            nullable = false
+    )
+    private Long sizeFile;
+
+    @Column(
+            name = "format",
+            nullable = false
+    )
+    private String format;
 
     @Column(
             name = "text",
@@ -50,23 +65,22 @@ public class Publication {
     )
     private String text;
 
-    @ManyToOne
-    @JoinColumn(
-            name = "id",
-            insertable = false,
-            updatable = false
-    )
+    @ManyToOne(fetch = LAZY)
     private User user;
 
     public Publication(
-            Long id,
+            Long publicationId,
             String fileName,
-            byte[] file,
+            String fileURL,
+            Long sizeFile,
+            String format,
             String text,
             User user) {
-        this.id = id;
+        this.publicationId = publicationId;
         this.fileName = fileName;
-        this.file = file;
+        this.fileURL = fileURL;
+        this.sizeFile = sizeFile;
+        this.format = format;
         this.text = text;
         this.user = user;
     }
@@ -74,12 +88,12 @@ public class Publication {
     public Publication() {
     }
 
-    public Long getId() {
-        return id;
+    public Long getPublicationId() {
+        return publicationId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPublicationId(Long publicationId) {
+        this.publicationId = publicationId;
     }
 
     public String getFileName() {
@@ -90,20 +104,36 @@ public class Publication {
         this.fileName = fileName;
     }
 
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
-    }
-
     public String getText() {
         return text;
     }
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getFileURL() {
+        return fileURL;
+    }
+
+    public void setFileURL(String fileURL) {
+        this.fileURL = fileURL;
+    }
+
+    public Long getSizeFile() {
+        return sizeFile;
+    }
+
+    public void setSizeFile(Long sizeFile) {
+        this.sizeFile = sizeFile;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
     }
 
     public User getUser() {
