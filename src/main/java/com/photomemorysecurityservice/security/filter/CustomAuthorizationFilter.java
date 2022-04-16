@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.photomemorysecurityservice.config.security.SecurityConfig.SECRET_KEY;
 import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
@@ -41,7 +42,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
                 try {
                     String token = authorizationHeader.substring("Bearer ".length());
-                    Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+                    Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY.getBytes());
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
                     String username = decodedJWT.getSubject();
@@ -56,9 +57,9 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                 } catch (JWTVerificationException exception) {
                     response.setHeader("error", exception.getMessage());
                     response.setStatus(FORBIDDEN.value());
+                    response.setContentType(APPLICATION_JSON_VALUE);
                     Map<String, String> error = new HashMap<>();
                     error.put("access_token", exception.getMessage());
-                    response.setContentType(APPLICATION_JSON_VALUE);
                     new ObjectMapper().writeValue(response.getOutputStream(), error);
                 }
             } else {
