@@ -43,7 +43,7 @@ public class PublicationServiceImpl implements PublicationService {
     }
 
     @Override
-    public void createPublication(Long userId, MultipartFile multipartFile) throws IOException {
+    public void createPublication(Long userId, MultipartFile multipartFile, String text) throws IOException {
         Cloudinary cloudinary = new Cloudinary(getCloudinaryConfiguration());
         String public_id = null;
         try {
@@ -59,6 +59,7 @@ public class PublicationServiceImpl implements PublicationService {
             publication.setFileURL(cloudinaryResponse.get("secure_url").toString());
             publication.setSizeFile(multipartFile.getSize());
             publication.setFormat(cloudinaryResponse.get("format").toString());
+            publication.setText(text);
             publication.setUser(user);
             public_id = cloudinaryResponse.get("public_id").toString();
             publicationRepos.save(publication);

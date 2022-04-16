@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 public interface PublicationService {
-    void createPublication(Long UserId, MultipartFile file) throws IOException;
+    void createPublication(Long UserId, MultipartFile file, String text) throws IOException;
 
     PublicationDto getPublication(Long id);
 }

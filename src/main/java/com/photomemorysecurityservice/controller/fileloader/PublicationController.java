@@ -2,6 +2,7 @@ package com.photomemorysecurityservice.controller.fileloader;
 
 import com.photomemorysecurityservice.dto.OperationMessageDto;
 import com.photomemorysecurityservice.dto.publication.PublicationDto;
+import com.photomemorysecurityservice.dto.publication.TextForCreatePublicationDto;
 import com.photomemorysecurityservice.service.fileloader.PublicationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import static org.springframework.http.MediaType.*;
 
@@ -25,12 +27,16 @@ public class PublicationController {
 
     @PostMapping(
             path = "/{userId}",
-            consumes = MULTIPART_FORM_DATA_VALUE,
+            consumes = {
+                    MULTIPART_FORM_DATA_VALUE,
+                    APPLICATION_JSON_VALUE
+            },
             produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<OperationMessageDto> uploadPhotoForPublication(
             @PathVariable(value = "userId") Long userId,
-            @RequestPart("file") MultipartFile file) throws IOException {
-        publicationService.createPublication(userId, file);
+            @RequestPart("file") MultipartFile file,
+            @RequestBody TextForCreatePublicationDto textDto) throws IOException {
+        publicationService.createPublication(userId, file, textDto.getText());
         return ResponseEntity.ok(new OperationMessageDto("Successful operation"));
     }
 
