@@ -205,13 +205,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                                     put("UserNotFoundException",
                                             "User with name: " + username + " not found");
                                 }}, NO_CONTENT));;
-                String accessToken = JWT.create()
-                        .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis() + 120 * 60 * 1000))
-                        .withIssuer(request.getRequestURL().toString())
-                        .withClaim("roles", user.getRoles().stream()
-                                .map(UserRole::getRoleName).collect(Collectors.toList()))
-                        .sign(algorithm);
+                String accessToken = createToken(request, algorithm, user);
                 Map<String, String> tokens = new HashMap<>();
                 tokens.put("access_token", accessToken);
                 tokens.put("refresh_token", refreshToken);
@@ -231,5 +225,15 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                         "Refresh token is missing");
             }}, UNAUTHORIZED);
         }
+    }
+
+    private String createToken(HttpServletRequest request, Algorithm algorithm, User user) {
+        return JWT.create()
+                .withSubject(user.getUsername())
+                .withExpiresAt(new Date(System.currentTimeMillis() + 120 * 60 * 1000))
+                .withIssuer(request.getRequestURL().toString())
+                .withClaim("roles", user.getRoles().stream()
+                        .map(UserRole::getRoleName).collect(Collectors.toList()))
+                .sign(algorithm);
     }
 }
