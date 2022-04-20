@@ -1,4 +1,4 @@
-package com.photomemorysecurityservice.service.fileloader;
+package com.photomemorysecurityservice.service.publication;
 
 import com.photomemorysecurityservice.dto.publication.PublicationDto;
 import com.photomemorysecurityservice.dto.publication.TextForCreatePublicationDto;

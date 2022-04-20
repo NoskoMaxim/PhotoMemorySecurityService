@@ -1,4 +1,4 @@
-package com.photomemorysecurityservice.service.fileloader;
+package com.photomemorysecurityservice.service.publication;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;

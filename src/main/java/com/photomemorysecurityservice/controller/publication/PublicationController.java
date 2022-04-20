@@ -1,9 +1,9 @@
-package com.photomemorysecurityservice.controller.fileloader;
+package com.photomemorysecurityservice.controller.publication;
 
 import com.photomemorysecurityservice.dto.OperationMessageDto;
 import com.photomemorysecurityservice.dto.publication.PublicationDto;
 import com.photomemorysecurityservice.dto.publication.TextForCreatePublicationDto;
-import com.photomemorysecurityservice.service.fileloader.PublicationServiceImpl;
+import com.photomemorysecurityservice.service.publication.PublicationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
