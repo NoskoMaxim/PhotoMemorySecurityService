@@ -6,6 +6,9 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class PublicationAdapter {
     ModelMapper publicationMapper = new ModelMapper();
@@ -18,7 +21,13 @@ public class PublicationAdapter {
                         publication.getUser().getUsername(), PublicationDto::setUsername));
     }
 
-    public PublicationDto getPhotoDto(Publication publication) {
+    public PublicationDto getPublicationDto(Publication publication) {
         return this.publicationMapper.map(publication, PublicationDto.class);
+    }
+
+    public List<PublicationDto> getPublicationDtoList(List<Publication> publications) {
+        return publications.stream()
+                .map(this::getPublicationDto)
+                .collect(Collectors.toList());
     }
 }
