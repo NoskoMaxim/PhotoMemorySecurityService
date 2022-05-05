@@ -7,10 +7,13 @@ import com.photomemorysecurityservice.config.exception.exceptions.CloudinaryExce
 import com.photomemorysecurityservice.config.exception.exceptions.PhotoNameExistenceException;
 import com.photomemorysecurityservice.config.exception.exceptions.PublicationNotFoundException;
 import com.photomemorysecurityservice.config.exception.exceptions.UserNotFoundException;
+import com.photomemorysecurityservice.dto.publication.CommentForAddingToPublicationDto;
 import com.photomemorysecurityservice.dto.publication.PublicationDto;
 import com.photomemorysecurityservice.dto.publication.TextForCreatePublicationDto;
+import com.photomemorysecurityservice.model.publication.Comments;
 import com.photomemorysecurityservice.model.publication.Publication;
 import com.photomemorysecurityservice.model.user.User;
+import com.photomemorysecurityservice.repository.comments.CommentsRepos;
 import com.photomemorysecurityservice.repository.publication.PublicationRepos;
 import com.photomemorysecurityservice.repository.user.UserRepos;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +37,17 @@ public class PublicationServiceImpl implements PublicationService {
     private final PublicationRepos publicationRepos;
     private final UserRepos userRepos;
     private final PublicationAdapter publicationAdapter;
+    private final CommentsRepos commentsRepos;
 
     @Autowired
     public PublicationServiceImpl(
             PublicationRepos publicationRepos,
             UserRepos userRepos,
-            PublicationAdapter publicationAdapter) {
+            PublicationAdapter publicationAdapter, CommentsRepos commentsRepos) {
         this.publicationRepos = publicationRepos;
         this.userRepos = userRepos;
         this.publicationAdapter = publicationAdapter;
+        this.commentsRepos = commentsRepos;
     }
 
     @Override
@@ -113,5 +118,31 @@ public class PublicationServiceImpl implements PublicationService {
                         }}, NO_CONTENT));
         publication.setText(textDto.getText());
         publicationRepos.save(publication);
+    }
+
+    @Override
+    public void setCommentForPublication(CommentForAddingToPublicationDto commentDto) {
+        Publication publication = publicationRepos.findById(commentDto.getPublicationId())
+                .orElseThrow(() -> new PublicationNotFoundException(
+                        new HashMap<>() {{
+                            put("PublicationNotFoundException",
+                                    "Publication with ID: " + commentDto.getPublicationId() + " not found");
+                        }}, NO_CONTENT));
+        User user = userRepos.findById(commentDto.getUserId())
+                .orElseThrow(() -> new UserNotFoundException(
+                        new HashMap<>() {{
+                            put("UserNotFoundException",
+                                    "User with ID: " + commentDto.getUserId() + " not found");
+                        }}, NO_CONTENT));
+        Comments comment = new Comments();
+        comment.setUser(user);
+        comment.setComment(commentDto.getText());
+        comment.setPublication(publication);
+        commentsRepos.save(comment);
+    }
+
+    @Override
+    public void deletePublicationById(Long publicationId) {
+        publicationRepos.deleteById(publicationId);
     }
 }
