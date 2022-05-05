@@ -204,7 +204,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                                 new HashMap<>() {{
                                     put("UserNotFoundException",
                                             "User with name: " + username + " not found");
-                                }}, NO_CONTENT));;
+                                }}, NO_CONTENT));
                 String accessToken = createToken(request, algorithm, user);
                 Map<String, String> tokens = new HashMap<>();
                 tokens.put("access_token", accessToken);
