@@ -1,6 +1,7 @@
 package com.photomemorysecurityservice.dto.publication;
 
-import com.photomemorysecurityservice.model.user.User;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PublicationDto {
     private Long id;
@@ -10,6 +11,7 @@ public class PublicationDto {
     private String format;
     private String text;
     private String username;
+    private List<CommentDto> comments = new ArrayList<>();
 
     public PublicationDto(
             Long id,
@@ -18,7 +20,8 @@ public class PublicationDto {
             Long sizeFile,
             String format,
             String text,
-            String username) {
+            String username,
+            List<CommentDto> comments) {
         this.id = id;
         this.fileName = fileName;
         this.fileURL = fileURL;
@@ -26,6 +29,7 @@ public class PublicationDto {
         this.format = format;
         this.text = text;
         this.username = username;
+        this.comments = comments;
     }
 
     public PublicationDto() {
@@ -85,5 +89,13 @@ public class PublicationDto {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public List<CommentDto> getCommentsDto() {
+        return comments;
+    }
+
+    public void setCommentsDto(List<CommentDto> comments) {
+        this.comments = comments;
     }
 }
