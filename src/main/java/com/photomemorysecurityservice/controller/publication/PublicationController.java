@@ -1,6 +1,7 @@
 package com.photomemorysecurityservice.controller.publication;
 
 import com.photomemorysecurityservice.dto.OperationMessageDto;
+import com.photomemorysecurityservice.dto.publication.CommentForAddingToPublicationDto;
 import com.photomemorysecurityservice.dto.publication.PublicationDto;
 import com.photomemorysecurityservice.dto.publication.TextForCreatePublicationDto;
 import com.photomemorysecurityservice.service.publication.PublicationServiceImpl;
@@ -63,5 +64,20 @@ public class PublicationController {
     public ResponseEntity<List<PublicationDto>> getAllPublicationByUserWithUserId(
             @PathVariable Long userId) {
         return ResponseEntity.ok().body(publicationService.getAllPublicationByUserWithUserId(userId));
+    }
+
+    @PostMapping(path = "/set/comment",
+            consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<OperationMessageDto> setCommentForPublication(
+            @RequestBody CommentForAddingToPublicationDto commentDto) {
+        publicationService.setCommentForPublication(commentDto);
+        return ResponseEntity.ok(new OperationMessageDto("Successful operation"));
+    }
+
+    @DeleteMapping(path ="/delete/{publicationId}")
+    public ResponseEntity<OperationMessageDto> deletePublicationById(
+            @PathVariable Long publicationId){
+        publicationService.deletePublicationById(publicationId);
+        return ResponseEntity.ok(new OperationMessageDto("Successful operation"));
     }
 }
