@@ -1,5 +1,6 @@
 package com.photomemorysecurityservice.model.user;
 
+import com.photomemorysecurityservice.model.publication.Comments;
 import com.photomemorysecurityservice.model.publication.Publication;
 
 import javax.persistence.Column;
@@ -97,6 +98,12 @@ public class User {
     )
     private List<Publication> publications = new ArrayList<>();
 
+    @OneToMany(
+            mappedBy = "user",
+            fetch = LAZY
+    )
+    private List<Comments> comments = new ArrayList<>();
+
     public User(
             Long userId,
             String username,
@@ -106,7 +113,8 @@ public class User {
             String email,
             String phone,
             List<UserRole> roles,
-            List<Publication> publications) {
+            List<Publication> publications,
+            List<Comments> comments) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -116,6 +124,7 @@ public class User {
         this.phone = phone;
         this.roles = roles;
         this.publications = publications;
+        this.comments = comments;
     }
 
     public User() {
@@ -191,5 +200,13 @@ public class User {
 
     public void setPublications(List<Publication> publications) {
         this.publications = publications;
+    }
+
+    public List<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
     }
 }

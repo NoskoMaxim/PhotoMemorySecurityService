@@ -4,6 +4,10 @@ import com.photomemorysecurityservice.model.user.User;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -68,6 +72,12 @@ public class Publication {
     @ManyToOne(fetch = LAZY)
     private User user;
 
+    @OneToMany(
+            mappedBy = "publication",
+            fetch = EAGER
+    )
+    private List<Comments> comments = new ArrayList<>();
+
     public Publication(
             Long publicationId,
             String fileName,
@@ -75,7 +85,8 @@ public class Publication {
             Long sizeFile,
             String format,
             String text,
-            User user) {
+            User user,
+            List<Comments> comments) {
         this.publicationId = publicationId;
         this.fileName = fileName;
         this.fileURL = fileURL;
@@ -83,6 +94,7 @@ public class Publication {
         this.format = format;
         this.text = text;
         this.user = user;
+        this.comments = comments;
     }
 
     public Publication() {
@@ -142,5 +154,13 @@ public class Publication {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
     }
 }
